@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+			height: 100%;
+			display: block;
+    }
+
+    .navigator {
+      float: left;
+      width: 60%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+    }
+
+    .content {
+      /* flex: 1 100%; */
+      height: 100%;
+      border: 1px solid lime;
+    }
+
+    .console {
+      float: right;
+      width: 40%;
+      height: 100%;
+      background-color: lightgrey;
+      color: limegreen;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+    }
+
+    .block {
+      border: 1px solid red;
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 40px;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      display: inline-block;
+    }
+
+    .winBackground {
+      display: none;
+      /* visibility: hidden; */
+      width: 100%;
+      height: 100%;
+      background-color: grey;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .winContainer {
+      position: relative;
+      top: 25%;
+      margin: auto auto;
+      width: 400px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid greenyellow;
+    }
+
+    .winContainer.winCaption,
+    .winContainer.winContent,
+    .winContainer.winFooter {
+      flex: 1 100%;
+    }
+
+    .winCaption {
+      text-align: center;
+      min-height: 32px;
+      line-height: 32px;
+      border: 1px solid red;
+      background-color: steelblue;
+    }
+
+    .winFooter {
+      background-color: white;
+      padding: 3px;
+      height: 32px;
+      min-height: 32px;
+      max-height: 32px;
+      line-height: 26px;
+      border: 1px solid blue;
+    }
+
+    .winContent {
+      height: 100%;
+      padding: 10px;
+      border: 1px solid black;
+      background-color: white;
+      position: relative;
+    }
+
+    .toolbar {
+      padding: 5px;
+      line-height: 32px;
+      height: 32px;
+    }
+
+    .left {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    }
+
+    button {
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+
+    #winInfo .winFooter {
+      display: none;
+    }
+
+    [draggable] {
+      cursor: move;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVIGATOR -->
+  <div class="navigator">
+    <div class="toolbar">
+      <button onclick="winGenerate.show();" type="button">Generate</button>
+    </div>
+    <div class="content" ondblclick="winInfo.show(event);"
+        ondrop="event.preventDefault(); event.stopPropagation(); this.appendChild(dragBlock);return false;"
+        ondragover="event.preventDefault();event.dataTransfer.dropEffect = 'move';"
+    >&nbsp;</div>
+  </div>
+  <!-- CONSOLE -->
+  <div class="console">
+    <div class="toolbar">
+      <button type="button" onclick="build.getting();">Build</button>
+    </div>
+    <div class="content"
+      ondrop="event.preventDefault(); event.stopPropagation(); this.appendChild(dragBlock);return false;"
+      ondragover="event.preventDefault();event.dataTransfer.dropEffect = 'move';"
+     >&nbsp;</div>
+  </div>
+
+
+  <div id="winGenerate" class="winBackground">
+    <div class="winContainer">
+      <div class="winCaption">Generate</div>
+      <div class="winContent">
+        <input name="caption" style="width: 100%;line-height: 32px;height: 32px;" autofocus="autofocus"/>
+      </div>
+      <div class="winFooter">
+        <button onclick="winGenerate.ok()" type="button" class="left">OK</button>
+        <button onclick="winGenerate.cancel()" type="button" class="right">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="winInfo" class="winBackground" onclick="winInfo.hide();">
+    <div class="winContainer" onclick="event.stopPropagation();">
+      <div class="winCaption">Info</div>
+      <div class="winContent">
+        <!-- information -->
+      </div>
+      <div class="winFooter">
+      </div>
+    </div>
+  </div>
+
+<script src="index.js"></script>
+</body>
+</html>
